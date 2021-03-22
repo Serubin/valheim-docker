@@ -13,15 +13,15 @@ services:
     ports:
       - "2456-2457:2456-2457/udp"
     environment:
-      SERVER_PORT: 2456
-      SERVER_NAME: "Friendly Scands"
-      WORLD_NAME: "Friendly Scands"
-      SERVER_PASS: "serverpassword"
-      SERVER_PUBLIC: false
-      TZ: "America/Los_Angeles"
-      BACKUPS: false
-      VALHEIM_PLUS: true
-      RESTART_CRON: 0 5 * * *
+      - SERVER_PORT=2456
+      - SERVER_NAME=Friendly Scands
+      - WORLD_NAME=Friendly Scands
+      - SERVER_PASS=serverpassword
+      - SERVER_PUBLIC=false
+      - TZ=America/Los_Angeles
+      - BACKUPS=false
+      - VALHEIM_PLUS=true
+      - RESTART_CRON=0 5 * * *
     stop_grace_period: 2m
     volumes:
       - /opt/data/valheim-server/config:/config
