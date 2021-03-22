@@ -1,7 +1,9 @@
 version: "3"
 services:
   valheim:
-    image: mbround18/valheim:latest
+    image: lloesche/valheim-server
+    cap_add:
+      - sys_nice
     networks:
       - default
     deploy:
@@ -9,22 +11,18 @@ services:
       restart_policy:
         condition: on-failure
     ports:
-      - 2456:2456/udp
-      - 2457:2457/udp
-      - 2458:2458/udp
+      - "2456-2457:2456-2457/udp"
     environment:
-      PORT: 2456
-      NAME: "Friendly Scands"
-      WORLD: "Friendly Scands"
-      PASSWORD: "serverpassword"
+      SERVER_PORT: 2456
+      SERVER_NAME: "Friendly Scands"
+      WORLD_NAME: "Friendly Scands"
+      SERVER_PASS: "serverpassword"
+      SERVER_PUBLIC: false
       TZ: "America/Los_Angeles"
-      PUBLIC: 0
-      TYPE: "ValheimPlus"
-      AUTO_BACKUP: 1
-      AUTO_BACKUP_SCHEDULE: "*/15 * * * *"
-      AUTO_BACKUP_REMOVE_OLD: 1
-      AUTO_BACKUP_DAYS_TO_LIVE: 3
+      BACKUPS: false
+      VALHEIM_PLUS: true
+      RESTART_CRON: 0 5 * * *
+    stop_grace_period: 2m
     volumes:
-    - /opt/data/valheim/saves:/home/steam/.config/unity3d/IronGate/Valheim
-    - /opt/data/valheim/server:/home/steam/valheim
-    - /opt/data/valheim/backups:/home/steam/backups
+      - /opt/data/valheim-server/config:/config
+      - /opt/data/valheim-server/data:/opt/valheim
